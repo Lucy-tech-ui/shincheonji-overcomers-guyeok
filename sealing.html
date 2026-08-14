@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEALING Q&A (BOOK OF REVELATION) - Assessment & Admin Portal</title>
+    <style>
+        :root {
+            --primary: #673ab7;
+            --primary-dark: #512da8;
+            --surface: #ffffff;
+            --background: #f0ebf8;
+            --border: #dadce0;
+            --text: #202124;
+            --subtext: #5f6368;
+            --error: #d93025;
+            --success: #137333;
+            --admin-accent: #0288d1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 860px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Navigation Header */
+        .nav-tabs {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Forms Style Cards */
+        .form-header-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 10px solid var(--primary);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(60,64,67,0.15);
+        }
+
+        .form-header-card.admin-mode {
+            border-top-color: var(--admin-accent);
+        }
+
+        .form-header-card h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.75rem;
+            color: var(--text);
+        }
+
+        .form-header-card p {
+            margin: 0 0 16px 0;
+            font-size: 0.9rem;
+            color: var(--subtext);
+            line-height: 1.5;
+        }
+
+        .timer-banner {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .timer-banner.warning {
+            background-color: #fce8e6;
+            color: var(--error);
+            border-color: #fadcbc;
+        }
+
+        .section-banner {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .marks-tag {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Inputs & Options */
+        input[type="text"], input[type="number"], select, textarea {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            border-radius: 0;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+            border-bottom: 2px solid var(--primary);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 4px;
+        }
+
+        textarea:focus {
+            border: 2px solid var(--primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 0;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .option-label input {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Buttons */
+        .submit-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 24px;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.12);
+        }
+
+        button.mat-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button.mat-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        button.mat-btn.outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        button.mat-btn.outline:hover {
+            background-color: rgba(103, 58, 183, 0.04);
+        }
+
+        button.mat-btn.admin {
+            background-color: var(--admin-accent);
+        }
+
+        button.mat-btn.admin:hover {
+            background-color: #0277bd;
+        }
+
+        /* View Controllers */
+        .view-section {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        /* Dashboard & Roster Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.12);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--subtext);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 8px;
+        }
+
+        .table-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow-x: auto;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.12);
+        }
+
+        table.roster-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        table.roster-table th, table.roster-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table.roster-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--text);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .score-badge {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(103, 58, 183, 0.1);
+            color: var(--primary);
+        }
+
+        .result-badge {
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .result-badge.passed { background: rgba(19, 115, 51, 0.1); color: var(--success); }
+        .result-badge.failed { background: rgba(217, 48, 37, 0.1); color: var(--error); }
+
+        .delete-btn {
+            background: none;
+            color: var(--error);
+            border: 1px solid var(--error);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: var(--surface);
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 380px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Admin Question Editor Specifics */
+        .admin-question-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--admin-accent);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.1);
+        }
+
+        .admin-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .admin-field-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--subtext);
+            text-transform: uppercase;
+        }
+
+        .admin-options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Admin Authentication Modal -->
+<div id="admin-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h3>🔒 Admin Security Access</h3>
+        <p style="font-size: 0.88rem; color: var(--subtext); margin: 0;">Enter the Administrator password to add questions, modify keys, or adjust assessment marks:</p>
+        <input type="password" id="admin-pin-input" placeholder="Enter Admin Password" style="border: 1px solid var(--border); padding: 8px; border-radius: 4px;">
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button class="mat-btn outline" onclick="closeAdminModal()" style="padding: 6px 12px;">Cancel</button>
+            <button class="mat-btn admin" onclick="verifyAdminPin()" style="padding: 6px 12px;">Authenticate</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    <!-- Top Nav Tabs -->
+    <div class="nav-tabs">
+        <div class="nav-left">
+            <button class="mat-btn" id="tab-test-btn" onclick="switchView('test')">Assessment Form</button>
+            <button class="mat-btn outline" id="tab-dash-btn" onclick="switchView('dashboard')">Score Dashboard</button>
+        </div>
+        <div class="nav-right">
+            <button class="mat-btn outline" id="tab-admin-btn" onclick="requestAdminAccess()" style="border-color: var(--admin-accent); color: var(--admin-accent);">
+                🔒 Manage Questions & Key (Admin Only)
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= 1. STUDENT ASSESSMENT FORM VIEW ================= -->
+    <div id="view-test" class="view-section active">
+        
+        <div class="form-header-card">
+            <h1>SEALING Q&A (BOOK OF REVELATION)</h1>
+            <p>OVERCOMERS QY Q&A REV 2:1-11. Please complete all questions below. Total available marks: 100. Allocated time: 26 minutes.</p>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display:block; font-weight:600; margin-bottom:6px; font-size:0.9rem;">Participant Full Name *</label>
+                <input type="text" id="participant-fullname" placeholder="Enter your full name here...">
+            </div>
+
+            <div id="timer-banner" class="timer-banner">
+                <span>Assessment Time Remaining:</span>
+                <span id="time-left" style="font-weight: 700; font-size: 1.1rem; color: var(--primary);">26:00</span>
+            </div>
+        </div>
+
+        <!-- Dynamic Container for Live Assessment Questions -->
+        <div id="student-questions-container" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Rendered Dynamically via JS -->
+        </div>
+
+        <!-- Submit Action Row -->
+        <div class="submit-row">
+            <button class="mat-btn" onclick="submitAssessment()">Submit Assessment</button>
+            <span style="font-size: 0.85rem; color: var(--subtext);">Automatic evaluation & scoring</span>
+        </div>
+
+    </div>
+
+    <!-- ================= 2. SCORE DASHBOARD VIEW ================= -->
+    <div id="view-dashboard" class="view-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Total Participants</div>
+                <div class="value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Average Score</div>
+                <div class="value" id="stat-avg">0 / 100</div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="margin: 0; color: var(--text);">Participant Performance Roster</h3>
+            <div style="display: flex; gap: 8px;">
+                <button class="mat-btn outline" style="padding: 6px 12px; font-size: 0.8rem;" onclick="exportScoresCSV()">Export CSV</button>
+                <button class="mat-btn" style="padding: 6px 12px; font-size: 0.8rem;" onclick="exportScoresWord()">Export Word (.doc)</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="roster-table">
+                <thead>
+                    <tr>
+                        <th>Participant Name</th>
+                        <th>Score</th>
+                        <th>Total</th>
+                        <th>Module / Chapter</th>
+                        <th>Grade</th>
+                        <th>Result</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="participant-table-body">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ================= 3. ADMIN QUESTION EDITOR & BUILDER VIEW ================= -->
+    <div id="view-admin" class="view-section">
+        <div class="form-header-card admin-mode">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h1 style="color: var(--admin-accent);">🔒 Admin Question Builder & Management</h1>
+                    <p>Authorized administrators can add brand new questions, edit existing questions/options, update marking keys, or delete out-of-date questions. Click <strong>"Save All Admin Changes"</strong> to update the live student assessment.</p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="mat-btn admin" onclick="openAddQuestionModal()" style="background-color: #2e7d32;">➕ Add New Question</button>
+                    <button class="mat-btn admin" onclick="saveAdminQuestionChanges()">Save All Changes</button>
+                    <button class="mat-btn outline" onclick="resetToDefaultQuestions()">Reset Defaults</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Container for Admin Editable Question Cards -->
+        <div id="admin-questions-editor-container" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Rendered Dynamically via JS -->
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+            <button class="mat-btn admin" onclick="openAddQuestionModal()" style="background-color: #2e7d32;">➕ Add New Question</button>
+            <button class="mat-btn admin" onclick="saveAdminQuestionChanges()">Save All Changes</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Add Question Modal -->
+<div id="add-question-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 480px;">
+        <h3 style="color: var(--admin-accent); margin-top:0;">➕ Add New Question</h3>
+        
+        <div class="admin-field-group">
+            <label>Section Category:</label>
+            <select id="new-q-section" style="border: 1px solid var(--border); padding: 8px; border-radius: 4px;">
+                <option value="1">Section 1: Multiple Choice (MCQ)</option>
+                <option value="2">Section 2: Detailed Text Explanation</option>
+            </select>
+        </div>
+
+        <div class="admin-field-group">
+            <label>Question Type:</label>
+            <select id="new-q-type" onchange="toggleNewQuestionTypeFields()" style="border: 1px solid var(--border); padding: 8px; border-radius: 4px;">
+                <option value="mcq">Multiple Choice (MCQ)</option>
+                <option value="text">Text Explanation</option>
+            </select>
+        </div>
+
+        <div class="admin-field-group">
+            <label>Question Text / Prompt:</label>
+            <textarea id="new-q-text" placeholder="Enter question text here..." style="min-height: 60px;"></textarea>
+        </div>
+
+        <div class="admin-field-group">
+            <label>Allocated Marks:</label>
+            <input type="number" step="0.01" id="new-q-marks" value="5" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+        </div>
+
+        <div id="new-q-mcq-container">
+            <div class="admin-field-group">
+                <label>Options (4 choices):</label>
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
+                    <input type="text" id="new-q-opt-0" placeholder="Option 1" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+                    <input type="text" id="new-q-opt-1" placeholder="Option 2" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+                    <input type="text" id="new-q-opt-2" placeholder="Option 3" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+                    <input type="text" id="new-q-opt-3" placeholder="Option 4" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+                </div>
+            </div>
+            <div class="admin-field-group" style="margin-top: 8px;">
+                <label>Correct Answer Key (Exact match to one option above):</label>
+                <input type="text" id="new-q-correct-mcq" placeholder="Enter exact correct option text" style="border: 1px solid var(--border); padding: 6px; border-radius: 4px;">
+            </div>
+        </div>
+
+        <div id="new-q-text-container" style="display: none;">
+            <div class="admin-field-group">
+                <label>Expected Model Answer / Criteria (For AI text alignment evaluation):</label>
+                <textarea id="new-q-correct-text" placeholder="Enter model answer key..." style="min-height: 60px;"></textarea>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+            <button class="mat-btn outline" onclick="closeAddQuestionModal()" style="padding: 6px 12px;">Cancel</button>
+            <button class="mat-btn admin" onclick="confirmAddNewQuestion()" style="padding: 6px 12px; background-color: #2e7d32;">Add Question</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initial Default Master Question Bank & Answer Key Data Structure
+    const defaultQuestionsData = [
+        {
+            id: 1, section: 1, type: 'mcq', marks: 5,
+            question: "What is the title of Revelation chapter 2 and how many verses does it have?",
+            options: [
+                "Letters sent to the Messengers of the seven churches and have 27verses",
+                "Letter sent to the seven messengers of the seven churches and have 29 verses",
+                "The Letters Sent to the Messengers of the Seven Churches and have 29 verses",
+                "None of the above"
+            ],
+            correct: "The Letters Sent to the Messengers of the Seven Churches and have 29 verses"
+        },
+        {
+            id: 2, section: 1, type: 'mcq', marks: 5,
+            question: "In which year did the Promise Pastor send Letters to the messengers of the seven years?",
+            options: ["1977", "1979", "Fall 1979", "14.03.1977"],
+            correct: "Fall 1979"
+        },
+        {
+            id: 3, section: 1, type: 'mcq', marks: 5,
+            question: "When was the start of the Betrayer?",
+            options: ["1980", "1966", "1967", "1981"],
+            correct: "1981"
+        },
+        {
+            id: 4, section: 1, type: 'mcq', marks: 5,
+            question: "When did the beast of the earth entered the Tabernacle Temple?",
+            options: ["1977", "1975", "1971", "1980"],
+            correct: "1980"
+        },
+        {
+            id: 5, section: 2, type: 'text', marks: 8.88,
+            question: "What does it mean \"To forsake the first love and what is the reality date?",
+            correct: "Requires detailed explanation regarding abandoning original covenant and spiritual devotion."
+        },
+        {
+            id: 6, section: 2, type: 'text', marks: 8.88,
+            question: "What does remove the lampstand means?",
+            correct: "Refers to taking away the role, authority, or light of leadership from the church/messenger."
+        },
+        {
+            id: 7, section: 2, type: 'text', marks: 8.88,
+            question: "The Letters sent contains three contents, what is the first content explain in detail with two biblical references?",
+            correct: "First content explanation with required scripture references."
+        },
+        {
+            id: 8, section: 2, type: 'text', marks: 8.88,
+            question: "What is the First blessing in Rev chapter 2 and what is the bible verse?",
+            correct: "Tree of life blessing in Paradise of God (Rev 2:7)."
+        },
+        {
+            id: 9, section: 2, type: 'text', marks: 8.88,
+            question: "How many churches are there in revelation chapter 2:1-11, state the names and reference?",
+            correct: "2 churches mentioned in Rev 2:1-11: Ephesus (Rev 2:1) and Smyrna (Rev 2:8)."
+        },
+        {
+            id: 10, section: 2, type: 'text', marks: 8.88,
+            question: "Did the Messengers repent after receiving the letters? And what is the third blessing explain in detail?",
+            correct: "Explanation of messenger response and details on the third blessing."
+        },
+        {
+            id: 11, section: 2, type: 'text', marks: 8.88,
+            question: "Who are those referring to \"Some of you \" and which verse says this in revelation chapter 2?",
+            correct: "Refers to believers in Smyrna tested by imprisonment (Rev 2:10)."
+        },
+        {
+            id: 12, section: 2, type: 'text', marks: 8.88,
+            question: "What does it mean by \"the devil will put some of you in prison for 10(ten) days?",
+            correct: "Symbolic period of trial and suffering tested by opposition."
+        },
+        {
+            id: 13, section: 2, type: 'text', marks: 8.88,
+            question: "What is the third blessing and give the bible verse that makes reference to this. Explain in detail?",
+            correct: "Hidden manna and white stone with a new name written on it (Rev 2:17)."
+        }
+    ];
+
+    let currentQuestions = [];
+    let totalSecondsLeft = 26 * 60; // 26 minutes timer
+    let timerInterval = null;
+    let isAdminAuthenticated = false;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadMasterQuestions();
+        renderStudentForm();
+        loadDashboardData();
+        startTimer();
+    });
+
+    // Load stored questions from LocalStorage or fallback to default
+    function loadMasterQuestions() {
+        const stored = localStorage.getItem('sealing_qa_master_questions');
+        if (stored) {
+            try {
+                currentQuestions = JSON.parse(stored);
+            } catch(e) {
+                currentQuestions = JSON.parse(JSON.stringify(defaultQuestionsData));
+            }
+        } else {
+            currentQuestions = JSON.parse(JSON.stringify(defaultQuestionsData));
+        }
+    }
+
+    // Render Student Assessment Form dynamically
+    function renderStudentForm() {
+        const container = document.getElementById('student-questions-container');
+        container.innerHTML = '';
+
+        // Section 1 Header
+        const sec1Banner = document.createElement('div');
+        sec1Banner.className = 'section-banner';
+        sec1Banner.textContent = 'Section 1: Multiple Choice Questions';
+        container.appendChild(sec1Banner);
+
+        // Section 1 Questions (MCQ)
+        const mcqQuestions = currentQuestions.filter(q => q.section === 1);
+        if (mcqQuestions.length === 0) {
+            const emptyNotice = document.createElement('div');
+            emptyNotice.style.color = 'var(--subtext)';
+            emptyNotice.style.padding = '10px 0';
+            emptyNotice.textContent = 'No Section 1 questions currently configured.';
+            container.appendChild(emptyNotice);
+        } else {
+            mcqQuestions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let optionsHTML = '';
+                q.options.forEach((opt) => {
+                    optionsHTML += `
+                        <label class="option-label">
+                            <input type="radio" name="student_q_${q.id}" value="${escapeHtml(opt)}">
+                            <span>${escapeHtml(opt)}</span>
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div>
+                        <span class="marks-tag">Question ${idx + 1} (${q.marks} Marks)</span>
+                        <div class="question-title">${escapeHtml(q.question)}</div>
+                    </div>
+                    <div class="options-group">${optionsHTML}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Section 2 Header
+        const sec2Banner = document.createElement('div');
+        sec2Banner.className = 'section-banner';
+        sec2Banner.style.borderLeftColor = '#2196f3';
+        sec2Banner.textContent = 'Section 2: Detailed Text Explanations';
+        container.appendChild(sec2Banner);
+
+        // Section 2 Questions (Text)
+        const textQuestions = currentQuestions.filter(q => q.section === 2);
+        if (textQuestions.length === 0) {
+            const emptyNotice = document.createElement('div');
+            emptyNotice.style.color = 'var(--subtext)';
+            emptyNotice.style.padding = '10px 0';
+            emptyNotice.textContent = 'No Section 2 questions currently configured.';
+            container.appendChild(emptyNotice);
+        } else {
+            textQuestions.forEach((q, idx) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="marks-tag" style="color: #2196f3;">Question ${idx + 1} (${q.marks} Marks)</span>
+                        <div class="question-title">${escapeHtml(q.question)}</div>
+                    </div>
+                    <textarea id="student_q_${q.id}_text" placeholder="Provide detailed biblical explanation..."></textarea>
+                `;
+                container.appendChild(card);
+            });
+        }
+    }
+
+    // Timer Logic
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            totalSecondsLeft--;
+            const mins = Math.floor(totalSecondsLeft / 60);
+            const secs = totalSecondsLeft % 60;
+            document.getElementById('time-left').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            if (totalSecondsLeft <= 60) {
+                document.getElementById('timer-banner').classList.add('warning');
+            }
+
+            if (totalSecondsLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time limit reached! Submitting assessment automatically.");
+                submitAssessment();
+            }
+        }, 1000);
+    }
+
+    // Switch Top-Level View
+    function switchView(viewName) {
+        document.getElementById('view-test').classList.remove('active');
+        document.getElementById('view-dashboard').classList.remove('active');
+        document.getElementById('view-admin').classList.remove('active');
+
+        document.getElementById('tab-test-btn').className = viewName === 'test' ? 'mat-btn' : 'mat-btn outline';
+        document.getElementById('tab-dash-btn').className = viewName === 'dashboard' ? 'mat-btn' : 'mat-btn outline';
+        document.getElementById('tab-admin-btn').className = viewName === 'admin' ? 'mat-btn admin' : 'mat-btn outline';
+
+        if (viewName === 'test') {
+            document.getElementById('view-test').classList.add('active');
+        } else if (viewName === 'dashboard') {
+            document.getElementById('view-dashboard').classList.add('active');
+            updateStats();
+        } else if (viewName === 'admin') {
+            document.getElementById('view-admin').classList.add('active');
+        }
+    }
+
+    // Admin Security Authorization
+    function requestAdminAccess() {
+        if (isAdminAuthenticated) {
+            switchView('admin');
+            renderAdminQuestionEditor();
+        } else {
+            document.getElementById('admin-modal').style.display = 'flex';
+            document.getElementById('admin-pin-input').focus();
+        }
+    }
+
+    function closeAdminModal() {
+        document.getElementById('admin-modal').style.display = 'none';
+        document.getElementById('admin-pin-input').value = '';
+    }
+
+    function verifyAdminPin() {
+        const pin = document.getElementById('admin-pin-input').value.trim();
+        if (pin === 'Admin123') {
+            isAdminAuthenticated = true;
+            closeAdminModal();
+            renderAdminQuestionEditor();
+            switchView('admin');
+        } else {
+            alert('Incorrect Admin password. Access denied.');
+            document.getElementById('admin-pin-input').value = '';
+            document.getElementById('admin-pin-input').focus();
+        }
+    }
+
+    // Add Question Modal Controls
+    function openAddQuestionModal() {
+        document.getElementById('new-q-text').value = '';
+        document.getElementById('new-q-marks').value = '5';
+        document.getElementById('new-q-correct-mcq').value = '';
+        document.getElementById('new-q-correct-text').value = '';
+        for(let i=0; i<4; i++) {
+            const optInput = document.getElementById(`new-q-opt-${i}`);
+            if (optInput) optInput.value = '';
+        }
+        document.getElementById('add-question-modal').style.display = 'flex';
+    }
+
+    function closeAddQuestionModal() {
+        document.getElementById('add-question-modal').style.display = 'none';
+    }
+
+    function toggleNewQuestionTypeFields() {
+        const type = document.getElementById('new-q-type').value;
+        if (type === 'mcq') {
+            document.getElementById('new-q-mcq-container').style.display = 'block';
+            document.getElementById('new-q-text-container').style.display = 'none';
+        } else {
+            document.getElementById('new-q-mcq-container').style.display = 'none';
+            document.getElementById('new-q-text-container').style.display = 'block';
+        }
+    }
+
+    function confirmAddNewQuestion() {
+        const section = parseInt(document.getElementById('new-q-section').value);
+        const type = document.getElementById('new-q-type').value;
+        const text = document.getElementById('new-q-text').value.trim();
+        const marks = parseFloat(document.getElementById('new-q-marks').value) || 5;
+
+        if (!text) {
+            alert('Please enter question text.');
+            return;
+        }
+
+        let newQ = {
+            id: currentQuestions.length > 0 ? Math.max(...currentQuestions.map(q => q.id)) + 1 : 1,
+            section: section,
+            type: type,
+            marks: marks,
+            question: text,
+            options: [],
+            correct: ''
+        };
+
+        if (type === 'mcq') {
+            let opts = [];
+            for(let i=0; i<4; i++) {
+                const val = document.getElementById(`new-q-opt-${i}`).value.trim();
+                if (val) opts.push(val);
+            }
+            if (opts.length < 2) {
+                alert('Please provide at least 2 options for a Multiple Choice question.');
+                return;
+            }
+            const correctKey = document.getElementById('new-q-correct-mcq').value.trim();
+            if (!correctKey || !opts.includes(correctKey)) {
+                alert('Please specify a correct answer key that matches one of the option choices exactly.');
+                return;
+            }
+            newQ.options = opts;
+            newQ.correct = correctKey;
+        } else {
+            const correctTextKey = document.getElementById('new-q-correct-text').value.trim();
+            if (!correctTextKey) {
+                alert('Please provide model answer criteria for text evaluation.');
+                return;
+            }
+            newQ.correct = correctTextKey;
+        }
+
+        currentQuestions.push(newQ);
+        localStorage.setItem('sealing_qa_master_questions', JSON.stringify(currentQuestions));
+        
+        closeAddQuestionModal();
+        renderAdminQuestionEditor();
+        renderStudentForm();
+        alert('New question added successfully!');
+    }
+
+    // Delete existing question
+    function deleteAdminQuestion(id) {
+        if (confirm('Are you sure you want to delete this question?')) {
+            currentQuestions = currentQuestions.filter(q => q.id !== id);
+            localStorage.setItem('sealing_qa_master_questions', JSON.stringify(currentQuestions));
+            renderAdminQuestionEditor();
+            renderStudentForm();
+        }
+    }
+
+    // Render Admin Question Editor Panel
+    function renderAdminQuestionEditor() {
+        const container = document.getElementById('admin-questions-editor-container');
+        container.innerHTML = '';
+
+        if (currentQuestions.length === 0) {
+            container.innerHTML = `<div style="text-align:center; padding: 20px; color: var(--subtext);">No questions available. Click "Add New Question" above to build your assessment.</div>`;
+            return;
+        }
+
+        currentQuestions.forEach((q) => {
+            const card = document.createElement('div');
+            card.className = 'admin-question-card';
+
+            let optionsEditorHTML = '';
+            if (q.type === 'mcq') {
+                optionsEditorHTML = `
+                    <div class="admin-field-group">
+                        <label>Multiple Choice Options:</label>
+                        <div class="admin-options-grid">
+                            ${q.options.map((opt, optIdx) => `
+                                <input type="text" id="admin_q_${q.id}_opt_${optIdx}" value="${escapeHtml(opt)}" placeholder="Option ${optIdx + 1}">
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="admin-field-group">
+                        <label>Correct Answer Key (Must match exact option text above):</label>
+                        <input type="text" id="admin_q_${q.id}_correct" value="${escapeHtml(q.correct)}">
+                    </div>
+                `;
+            } else {
+                optionsEditorHTML = `
+                    <div class="admin-field-group">
+                        <label>Admin Expected Model Answer Key (Participant answers will be compared/aligned against this):</label>
+                        <textarea id="admin_q_${q.id}_correct" style="min-height: 70px;">${escapeHtml(q.correct)}</textarea>
+                    </div>
+                `;
+            }
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <strong style="color: var(--admin-accent);">ID #${q.id} (${q.type.toUpperCase()})</strong>
+                        <select id="admin_q_${q.id}_section" style="border: 1px solid var(--border); padding: 2px 6px; font-size: 0.8rem; border-radius: 4px;">
+                            <option value="1" ${q.section === 1 ? 'selected' : ''}>Section 1 (MCQ)</option>
+                            <option value="2" ${q.section === 2 ? 'selected' : ''}>Section 2 (Text)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <label style="font-size: 0.8rem; font-weight:600;">Marks:</label>
+                            <input type="number" step="0.01" id="admin_q_${q.id}_marks" value="${q.marks}" style="width: 70px; border: 1px solid var(--border); padding: 4px; border-radius: 4px;">
+                        </div>
+                        <button class="delete-btn" onclick="deleteAdminQuestion(${q.id})">Delete Q</button>
+                    </div>
+                </div>
+                <div class="admin-field-group">
+                    <label>Question Prompt / Text:</label>
+                    <textarea id="admin_q_${q.id}_text" style="min-height: 50px;">${escapeHtml(q.question)}</textarea>
+                </div>
+                ${optionsEditorHTML}
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    // Save Changes from Admin Editor
+    function saveAdminQuestionChanges() {
+        currentQuestions.forEach(q => {
+            const textEl = document.getElementById(`admin_q_${q.id}_text`);
+            const marksEl = document.getElementById(`admin_q_${q.id}_marks`);
+            const sectionEl = document.getElementById(`admin_q_${q.id}_section`);
+            const correctEl = document.getElementById(`admin_q_${q.id}_correct`);
+
+            if (textEl) q.question = textEl.value.trim();
+            if (marksEl) q.marks = parseFloat(marksEl.value) || 0;
+            if (sectionEl) q.section = parseInt(sectionEl.value);
+            if (correctEl) q.correct = correctEl.value.trim();
+
+            if (q.type === 'mcq') {
+                q.options.forEach((_, optIdx) => {
+                    const optEl = document.getElementById(`admin_q_${q.id}_opt_${optIdx}`);
+                    if (optEl) q.options[optIdx] = optEl.value.trim();
+                });
+            }
+        });
+
+        // Persist updated structure to LocalStorage
+        localStorage.setItem('sealing_qa_master_questions', JSON.stringify(currentQuestions));
+        
+        // Re-render live form
+        renderStudentForm();
+
+        alert('All question modifications, additions, and answer keys saved successfully! The student assessment form is fully updated.');
+        switchView('test');
+    }
+
+    // Reset Questions to Default Initial Configuration
+    function resetToDefaultQuestions() {
+        if (confirm('Are you sure you want to reset all questions and answer keys back to original defaults?')) {
+            currentQuestions = JSON.parse(JSON.stringify(defaultQuestionsData));
+            localStorage.removeItem('sealing_qa_master_questions');
+            renderAdminQuestionEditor();
+            renderStudentForm();
+            alert('Questions reset to default settings.');
+        }
+    }
+
+    // Advanced Text Similarity Matching (Levenshtein / Token Alignment with Admin Key)
+    function calculateTextAlignmentScore(participantText, adminKeyText) {
+        if (!participantText || !adminKeyText) return 0;
+        
+        const cleanUser = participantText.toLowerCase().replace(/[^\w\s]/gi, '').trim();
+        const cleanAdmin = adminKeyText.toLowerCase().replace(/[^\w\s]/gi, '').trim();
+
+        if (cleanUser === cleanAdmin) return 1.0;
+
+        const userWords = cleanUser.split(/\s+/).filter(w => w.length > 2);
+        const adminWords = cleanAdmin.split(/\s+/).filter(w => w.length > 2);
+
+        if (adminWords.length === 0) return userWords.length > 0 ? 0.5 : 0;
+
+        let matchedCount = 0;
+        userWords.forEach(uw => {
+            if (adminWords.some(aw => aw.includes(uw) || uw.includes(aw))) {
+                matchedCount++;
+            }
+        });
+
+        const ratio = matchedCount / Math.max(1, adminWords.length);
+        return Math.min(1.0, Math.max(ratio, userWords.length >= 3 ? 0.4 : 0.1));
+    }
+
+    // Evaluate and Submit Assessment
+    function submitAssessment() {
+        const fullname = document.getElementById('participant-fullname').value.trim();
+        if (!fullname) {
+            alert('Please enter your Full Name before submitting.');
+            document.getElementById('participant-fullname').focus();
+            return;
+        }
+
+        let earnedMarks = 0;
+        let totalPossibleMarks = currentQuestions.reduce((acc, q) => acc + q.marks, 0);
+        if (totalPossibleMarks === 0) totalPossibleMarks = 100; // fallback
+
+        currentQuestions.forEach(q => {
+            if (q.type === 'mcq') {
+                const radios = document.getElementsByName(`student_q_${q.id}`);
+                let selectedVal = null;
+                for (const r of radios) {
+                    if (r.checked) {
+                        selectedVal = r.value;
+                        break;
+                    }
+                }
+                if (selectedVal && selectedVal.trim() === q.correct.trim()) {
+                    earnedMarks += q.marks;
+                }
+            } else if (q.type === 'text') {
+                const textVal = (document.getElementById(`student_q_${q.id}_text`)?.value || '').trim();
+                if (textVal.length > 0) {
+                    const alignmentFactor = calculateTextAlignmentScore(textVal, q.correct);
+                    earnedMarks += (q.marks * alignmentFactor);
+                }
+            }
+        });
+
+        // Normalize score to 100 max scale
+        const normalizedScore = (earnedMarks / totalPossibleMarks) * 100;
+        const finalScore = Math.min(100, Math.round(normalizedScore * 100) / 100);
+        const grade = getGrade(finalScore);
+        const result = finalScore >= 50 ? 'PASSED' : 'FAILED';
+
+        // Save Record
+        let roster = getStoredRoster();
+        roster.push({
+            name: fullname,
+            score: finalScore,
+            total: 100,
+            chapter: 'Rev 2:1-11',
+            grade: grade,
+            result: result,
+            date: new Date().toLocaleDateString()
+        });
+        localStorage.setItem('sealing_qa_roster', JSON.stringify(roster));
+
+        alert(`Assessment submitted successfully!\n\nParticipant: ${fullname}\nFinal Score: ${finalScore} / 100\nGrade: ${grade} (${result})`);
+
+        // Reset inputs
+        document.getElementById('participant-fullname').value = '';
+        renderStudentForm();
+        
+        switchView('dashboard');
+    }
+
+    function getGrade(score) {
+        if (score >= 90) return 'A+';
+        if (score >= 80) return 'A';
+        if (score >= 70) return 'B';
+        if (score >= 60) return 'C';
+        if (score >= 50) return 'D';
+        return 'F';
+    }
+
+    function getStoredRoster() {
+        const data = localStorage.getItem('sealing_qa_roster');
+        if (!data) return [];
+        try { return JSON.parse(data); } catch(e) { return []; }
+    }
+
+    function loadDashboardData() {
+        const roster = getStoredRoster();
+        const tbody = document.getElementById('participant-table-body');
+        tbody.innerHTML = '';
+
+        if (roster.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--subtext); padding: 24px;">No participant performance records available.</td></tr>`;
+            updateStats();
+            return;
+        }
+
+        roster.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            const resultClass = item.result === 'PASSED' ? 'passed' : 'failed';
+            tr.innerHTML = `
+                <td style="font-weight: 500;">${escapeHtml(item.name)}</td>
+                <td><span class="score-badge">${item.score}</span></td>
+                <td>${item.total}</td>
+                <td>${escapeHtml(item.chapter)}</td>
+                <td style="font-weight: 600;">${escapeHtml(item.grade)}</td>
+                <td><span class="result-badge ${resultClass}">${escapeHtml(item.result)}</span></td>
+                <td style="text-align: right;"><button class="delete-btn" onclick="deleteRosterItem(${index})">Remove</button></td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        updateStats();
+    }
+
+    function updateStats() {
+        const roster = getStoredRoster();
+        document.getElementById('stat-total').textContent = roster.length;
+
+        if (roster.length === 0) {
+            document.getElementById('stat-avg').textContent = '0 / 100';
+            return;
+        }
+
+        const sum = roster.reduce((acc, curr) => acc + curr.score, 0);
+        const avg = Math.round((sum / roster.length) * 100) / 100;
+        document.getElementById('stat-avg').textContent = `${avg} / 100`;
+    }
+
+    function deleteRosterItem(index) {
+        if (confirm('Are you sure you want to delete this participant record?')) {
+            let roster = getStoredRoster();
+            roster.splice(index, 1);
+            localStorage.setItem('sealing_qa_roster', JSON.stringify(roster));
+            loadDashboardData();
+        }
+    }
+
+    function exportScoresCSV() {
+        const roster = getStoredRoster();
+        if (roster.length === 0) { alert('No roster data to export.'); return; }
+
+        let csvContent = "data:text/csv;charset=utf-8,Participant Name,Score,Total,Chapter,Grade,Result,Date\n";
+        roster.forEach(row => {
+            csvContent += `"${row.name}",${row.score},${row.total},"${row.chapter}","${row.grade}","${row.result}","${row.date}"\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "sealing_qa_scores.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function exportScoresWord() {
+        const roster = getStoredRoster();
+        if (roster.length === 0) { alert('No roster data to export.'); return; }
+
+        let htmlContent = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><title>Score Roster</title><style>body{font-family:Arial;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #dadce0;padding:8px;text-align:left;} th{background:#f8f9fa;}</style></head>
+            <body>
+            <h2>SEALING Q&A - Assessment Score Roster</h2>
+            <table>
+                <thead>
+                    <tr><th>Participant Name</th><th>Score</th><th>Total</th><th>Chapter</th><th>Grade</th><th>Result</th></tr>
+                </thead>
+                <tbody>
+        `;
+
+        roster.forEach(row => {
+            htmlContent += `<tr><td>${escapeHtml(row.name)}</td><td>${row.score}</td><td>${row.total}</td><td>${escapeHtml(row.chapter)}</td><td>${escapeHtml(row.grade)}</td><td>${escapeHtml(row.result)}</td></tr>`;
+        });
+
+        htmlContent += `</tbody></table></body></html>`;
+
+        const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'sealing_qa_scores.doc';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function escapeHtml(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+</script>
+
+</body>
+</html>
